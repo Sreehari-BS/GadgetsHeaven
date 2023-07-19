@@ -3,7 +3,6 @@ const ejs = require('ejs');
 const fs = require('fs');
 const path = require('path');
 const ImageKit = require('imagekit');
-// const { error } = require('console');
 const User = require('../models/userModel');
 const Product = require('../models/productModel');
 const Category = require('../models/categoryModel');
@@ -283,9 +282,9 @@ const loadAddProducts = async (req, res) => {
 };
 
 const imagekit = new ImageKit({
-  publicKey: 'public_iossN/KUovNpeCnvrM32hmNestE=',
-  privateKey: 'private_riVGPvUavjHY2Sf8+8MPV5hwAa8=',
-  urlEndpoint: 'https://ik.imagekit.io/imgCDN1',
+  publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
 });
 
 const insertProduct = async (req, res) => {
