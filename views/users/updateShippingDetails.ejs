@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gadgets Heaven</title>
+</head>
+
+<body>
+    <%- include('../layouts/homeHeader.ejs') %>
+
+        <%- include('../layouts/navbar.ejs')%>
+            <div class="container">
+                <div class="form-container">
+                    <br>
+                    <h4 class="container"><strong>Update Existing Address</strong></h4>
+                    <br>
+                    <form class="container"
+                        action="/home/updateShippingAddress/<%= user._id %>?addressIndex=<%= addressIndex %>"
+                        method="post">
+                        <div>
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" name="name"
+                                value="<%= order.shippingAddress[addressIndex].name %>" required>
+                        </div>
+
+                        <div>
+                            <label for="houseName">House Name:</label>
+                            <input type="text" id="houseName" name="houseName"
+                                value="<%= order.shippingAddress[addressIndex].houseName %>" required>
+                        </div>
+
+                        <div>
+                            <label for="place">Place:</label>
+                            <input type="text" id="place" name="place"
+                                value="<%= order.shippingAddress[addressIndex].place %>" required>
+                        </div>
+
+                        <div>
+                            <label for="city">City:</label>
+                            <input type="text" id="city" name="city"
+                                value="<%= order.shippingAddress[addressIndex].city %>" required>
+                        </div>
+
+                        <div>
+                            <label for="district">District:</label>
+                            <input type="text" id="district" name="district"
+                                value="<%= order.shippingAddress[addressIndex].district %>" required>
+                        </div>
+
+                        <div>
+                            <label for="state">State:</label>
+                            <input type="text" id="state" name="state"
+                                value="<%= order.shippingAddress[addressIndex].state %>" required>
+                        </div>
+
+                        <div>
+                            <label for="pinCode">Pin Code:</label>
+                            <input type="text" id="pinCode" name="pinCode"
+                                value="<%= order.shippingAddress[addressIndex].pinCode %>" required>
+                        </div>
+
+                        <div>
+                            <label for="phoneNumber">Phone Number:</label>
+                            <input type="text" id="phoneNumber" name="phoneNumber"
+                                value="<%= order.shippingAddress[addressIndex].phoneNumber %>" required>
+                        </div>
+
+                        <button type="submit">Update</button>
+                    </form>
+                </div>
+            </div>
+
+            <%- include('../layouts/homeFooter.ejs') %>
+</body>
+
+</html>
+
+<style>
+    form {
+        display: flex;
+        flex-direction: column;
+        max-width: 400px;
+        margin: 0;
+    }
+
+    div {
+        margin-bottom: 10px;
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+    }
+
+    input[type="text"] {
+        width: 200%;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+    button[type="submit"] {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .form-container {
+        width: 100%;
+    }
+
+    .previous-addresses {
+        width: 60%;
+        text-align: left;
+        margin-top: 10%;
+    }
+
+    input[type="radio"],
+    label {
+        display: inline;
+        vertical-align: middle;
+    }
+</style>

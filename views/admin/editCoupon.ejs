@@ -1,0 +1,63 @@
+<%- include('../layouts/header') %>
+
+    <div style="background-color: aquamarine; height: 100vh;">
+        <button style="margin-left: 10px; margin-top: 10px;" class="btn btn-primary"><a
+                style="text-decoration: none; color: rgb(255, 255, 255);" href="/admin/coupons">Go Back</a></button>
+        <div class="container-fluid h-100">
+            <div class="row h-100">
+                <div class="col-12 col-sm-8 col-md-6 m-auto">
+                    <div class="card border-0 shadow">
+                        <div class="card-body">
+                            <h4 style="color:rgb(64, 64, 218);" class="text-center">Edit Coupon</h4>
+                            <form action="/admin/coupons/editCoupon/<%= coupon._id %>" method="post">
+                                <input type="text" class="form-control my-3 py-2" name="code" placeholder="Coupon Code"
+                                    value=" <%= coupon.code %>">
+                                <div class="form-group">
+                                    <textarea class="form-control" placeholder="Description" name="description"
+                                        rows="3"> <%= coupon.description %></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control my-3 py-2" name="discountType">
+                                        <option value="Percentage" <%=coupon.discountType==='Percentage' ? 'selected'
+                                            : '' %>>Percentage</option>
+                                        <option value="Fixed" <%=coupon.discountType==='Fixed' ? 'selected' : '' %>
+                                            >Fixed</option>
+                                    </select>
+                                </div>
+
+                                <input type="tel" class="form-control my-3 py-2" name="discountValue"
+                                    placeholder="Discount Value" value="<%= coupon.discountValue %>">
+                                <input type="tel" class="form-control my-3 py-2" name="minimumOrderAmount"
+                                    placeholder="Minimum Order Amount" value="<%= coupon.minimumOrderAmount %>">
+                                <input type="tel" class="form-control my-3 py-2" name="maximumDiscountAmount"
+                                    placeholder="Maximum Discount Amount" value="<%= coupon.maximumDiscountAmount %>">
+                                <div class="form-control my-3 py-2">
+                                    <label for="validityStart">Validity Start:</label>
+                                    <input type="date" name="validityStart"
+                                        value="<%= coupon.validityStart.toISOString().substr(0, 10) %>">
+                                </div>
+                                <div class="form-control my-3 py-2">
+                                    <label for="validityEnd">Validity End:</label>
+                                    <input type="date" name="validityEnd"
+                                        value="<%= coupon.validityEnd.toISOString().substr(0, 10) %>">
+                                </div>
+                                <input type="tel" class="form-control my-3 py-2" name="usageLimit"
+                                    placeholder="usageLimit" value="<%= coupon.usageLimit %>">
+                                <div class="text-center mt-3">
+                                    <button type="submit" class="btn btn-primary">Edit</button>
+                                    <% if(typeof message !=="undefined" ){ %>
+                                        <br>
+                                        <p style="color: green;">
+                                            <%= message %>
+                                        </p>
+                                        <% } %>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../layouts/footer') %>

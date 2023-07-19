@@ -1,0 +1,108 @@
+<%- include('../layouts/header') %>
+
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand">Admin Panel</a>
+            <button class="btn btn-outline-success"><a style="text-decoration: none; color: black;"
+                    href="/admin/adminLogout">LogOut</a></button>
+        </div>
+    </nav>
+    <br>
+    <div style="display:flex;">
+        <div style="width: 250px; height: 850px; margin-left: 10px; border-radius: 10px; border: 3px solid rgb(166, 232, 161);"
+            class="container-fluid">
+            <ul style="list-style: none; width: 200px; height: 660px;">
+                <li style="padding-top: 30px; padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black "
+                        href="/admin/home">DashBoard</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/products">Products</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/users">Users</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/coupons">Coupons</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/category">Category</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/orders">Orders</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/banner">Banner</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/offer">Offers</a>
+                </li>
+            </ul>
+        </div>
+
+        <div style=" border-radius: 10px; border: 3px solid rgb(166, 232, 161); margin-left: 10px; margin-right: 10px; padding-top: 35px;"
+            class="container">
+            <table style="width: 90%;" class="container text-center">
+                <tr>
+                    <th>No:</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Action</th>
+                </tr>
+
+                <% if(users.length> 0){
+                    for(let i=0;i<users.length;i++){ %>
+
+                        <tr>
+                            <td>
+                                <%=i+1%>
+                            </td>
+                            <td>
+                                <%=users[i].name%>
+                            </td>
+                            <td>
+                                <%=users[i].email%>
+                            </td>
+                            <td>
+                                <%=users[i].phoneNumber%>
+                            </td>
+                            <!-- <td>
+                                <button class="btn btn-danger text-black" type="submit">Block</button>
+                            </td> -->
+                            <td>
+                                <% if(users[i].isBlocked===0) { %>
+                                    <form action="/admin/users/block/<%= users[i]._id %>" method="post">
+                                        <button class="btn btn-danger text-black" type="submit">Block</button>
+                                    </form>
+                                    <% } else if(users[i].isBlocked===1) { %>
+                                        <form action="/admin/users/unblock/<%= users[i]._id %>" method="post">
+                                            <button class="btn btn-success text-white" type="submit">UnBlock</button>
+                                        </form>
+                                        <% } %>
+                            </td>
+                        </tr>
+
+                        <% } } %>
+
+            </table>
+        </div>
+
+    </div>
+
+
+    <%- include('../layouts/footer') %>

@@ -1,0 +1,85 @@
+<%- include('../layouts/header') %>
+
+    <br><br>
+    <div class="container" style="display: flex; flex-wrap: wrap;">
+        <div class="card border-0 shadow" style="width: 30%; margin-right: 20px;">
+            <div class="card-body">
+                <h3 class="card-title" style="color: rgb(224, 114, 17);"><strong>USER DETAILS</strong></h3>
+                <div class="container">
+                    <h4><strong>
+                            <%= user.name %>
+                        </strong></h4>
+                    <%= order.shippingAddress[0].houseName %>,
+                        <br>
+                        <%= order.shippingAddress[0].place %> PO,
+                            <br>
+                            <%= order.shippingAddress[0].city %>,
+                                <br>
+                                <%= order.shippingAddress[0].district %>,
+                                    <br>
+                                    <%= order.shippingAddress[0].state %>,
+                                        <br>
+                                        <strong>PIN:<%= order.shippingAddress[0].pinCode %></strong>
+                                        <br>
+                                        <strong>Phone:<%= order.shippingAddress[0].phoneNumber %></strong>
+                                        <br>
+                                        <strong>Email:<%= user.email %></strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow" style="width: 68%;">
+            <div class="card-body">
+                <h3 class="card-title" style="color: rgb(154, 8, 91);"><strong>PRODUCT DETAILS</strong></h3>
+                <div class="container">
+                    <% products.forEach(product=> { %>
+                        <h4><strong>
+                                <%= product.title %>
+                            </strong></h4>
+                        <Table style="border-collapse: collapse; width: 100%;" class="text-center">
+                            <tr>
+                                <th style="border: 1px solid black; padding: 8px;">Product</th>
+                                <th style="border: 1px solid black; padding: 8px;">Category</th>
+                                <th style="border: 1px solid black; padding: 8px;">Price</th>
+                                <th style="border: 1px solid black; padding: 8px;">Quantity</th>
+                                <th style="border: 1px solid black; padding: 8px;">Status</th>
+                            </tr>
+                            <tr class="text-center">
+                                <td style="border: 1px solid black; padding: 8px;"><img class="product-image"
+                                        src="<%= product.images[product.images.length-1] %>" alt=""></td>
+                                <td style="border: 1px solid black; padding: 8px;">
+                                    <%= product.category.categoryName %>
+                                </td>
+                                <td class="text-success" style="border: 1px solid black; padding: 8px;">
+                                    <strong>₹<%= product.price %></strong>
+                                </td>
+                                <% order.purchasedProducts.forEach(purchase => {
+                                    if (purchase.product.toString() === product._id.toString()) {
+                                      if (purchase.date.toISOString() === purchasedDate.toISOString()) { %>
+                                        <td style="border: 1px solid black; padding: 8px;">
+                                          <%= purchase.quantity %>
+                                        </td>
+                                        <td class="text-danger" style="border: 1px solid black; padding: 8px;">
+                                          <strong><%= purchase.status %></strong>
+                                        </td>
+                                      <% }
+                                    }
+                                  }); %> 
+                            </tr>
+                        </Table>
+                        <% }); %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <%- include('../layouts/footer') %>
+
+        <style>
+            .product-image {
+                max-width: 150px;
+                max-height: 150px;
+                object-fit: fit;
+            }
+        </style>

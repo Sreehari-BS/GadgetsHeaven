@@ -1,0 +1,37 @@
+<%- include('../layouts/header') %>
+
+  <div style="background-color: aquamarine; height: 100vh;">
+    <button style="margin-left: 10px; margin-top: 10px;" class="btn btn-primary"><a
+        style="text-decoration: none; color: rgb(255, 255, 255);" href="/admin/category">Go Back</a></button>
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-12 col-sm-8 col-md-6 m-auto">
+          <div class="card border-0 shadow">
+            <div class="card-body">
+              <h4 style="color:rgb(64, 64, 218);" class="text-center">Add Categories</h4>
+              <form action="/admin/category/addCategories" method="POST" enctype="multipart/form-data">
+                <input type="text" class="form-control my-3 py-2" name="categoryName" placeholder="Category Name"
+                  required>
+                <div class="form-group">
+                  <textarea class="form-control" placeholder="Category Description" name="categoryDescription" rows="4"
+                    required></textarea>
+                </div>
+                <input type="file" class="form-control my-3 py-2" name="categoryImage" required>
+                <div class="text-center mt-3">
+                  <button type="submit" class="btn btn-primary">ADD</button>
+                  <% if(typeof message !=="undefined" ){ %>
+                    <br>
+                    <p style="color: green;">
+                      <%= message %>
+                    </p>
+                    <% } %>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include('../layouts/footer') %>

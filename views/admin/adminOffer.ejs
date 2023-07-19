@@ -1,0 +1,140 @@
+<%- include('../layouts/header') %>
+
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand">Admin Panel</a>
+            <button class="btn btn-outline-success"><a style="text-decoration: none; color: black;"
+                    href="/admin/adminLogout">LogOut</a></button>
+        </div>
+    </nav>
+    <br>
+    <div style="display:flex;">
+        <div style="width: 250px; height: 850px; margin-left: 10px; border-radius: 10px; border: 3px solid rgb(166, 232, 161);"
+            class="container-fluid">
+            <ul style="list-style: none; width: 200px; height: 660px;">
+                <li style="padding-top: 30px; padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black "
+                        href="/admin/home">DashBoard</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/products">Products</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/users">Users</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/coupons">Coupons</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/category">Category</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/orders">Orders</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/banner">Banner</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/offer">Offers</a>
+                </li>
+            </ul>
+        </div>
+
+        <div style=" border-radius: 10px; border: 3px solid rgb(166, 232, 161); margin-left: 10px; margin-right: 10px; padding-top: 35px;"
+            class="container">
+
+            <table class="container text-center" style="width: 100%;">
+                <tr>
+                    <th>No:</th>
+                    <th>Title</th>
+                    <th>Type</th>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Referral Code</th>
+                    <th>Discount(%)</th>
+                    <th>End Date</th>
+                    <th>is_available</th>
+                    <th>Action</th>
+                </tr>
+                <% offers.forEach((offer,index)=>{%>
+                    <tr>
+                        <td>
+                            <%= index+1 %>
+                        </td>
+                        <td>
+                            <strong class="text-success">
+                                <%= offer.offerTitle %>
+                            </strong>
+                        </td>
+                        <td>
+                            <%= offer.offerType %>
+                        </td>
+
+                        <td>
+                            <% if (offer.product && offer.product.title) { %>
+                                <strong class="text-success">
+                                    <%= offer.product.title %>
+                                </strong>
+                                <% } %>
+                        </td>
+                        <td>
+                            <% if (offer.category && offer.category.categoryName) { %>
+                                <strong class="text-success">
+                                    <%= offer.category.categoryName %>
+                                </strong>
+                                <% } %>
+                        </td>
+                        <td>
+                            <% if (offer.referralCode) { %>
+                                <strong class="text-success">
+                                    <%= offer.referralCode %>
+                                </strong>
+                                <% } %>
+                        </td>
+                        <td>
+                            <%= offer.offerDiscount %>
+                        </td>
+                        <td>
+                            <%= offer.endDate.toLocaleDateString() %>
+                        </td>
+                        <td style="color: <%= offer.is_available ? 'green' : 'red' %>;">
+                            <strong>
+                                <%= offer.is_available %>
+                            </strong>
+                        </td>
+                        <td>
+                            <a href="/admin/offer/editOffer/<%= offer._id %>">
+                                <button class="btn btn-danger" <%=offer.is_available ? '' : 'disabled' %>>
+                                    Edit
+                                </button>
+                            </a>
+                        </td>
+
+                    </tr>
+                    <%}) %>
+            </table>
+
+
+            <br><br>
+            <button class="btn btn-outline-success"><a style="text-decoration: none; color: black;"
+                    href="/admin/offer/addOffer">+ add Offer</a></button>
+
+        </div>
+
+    </div>
+
+    <%- include('../layouts/footer') %>

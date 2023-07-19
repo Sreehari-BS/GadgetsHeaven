@@ -1,0 +1,132 @@
+<%- include('../layouts/header') %>
+
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand">Admin Panel</a>
+            <button class="btn btn-outline-success"><a style="text-decoration: none; color: black;"
+                    href="/admin/adminLogout">LogOut</a></button>
+        </div>
+    </nav>
+    <br>
+    <div style="display:flex;">
+        <div style="width: 250px; height: 850px; margin-left: 10px; border-radius: 10px; border: 3px solid rgb(166, 232, 161);"
+            class="container-fluid">
+            <ul style="list-style: none; width: 200px; height: 660px;">
+                <li style="padding-top: 30px; padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black "
+                        href="/admin/home">DashBoard</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/products">Products</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/users">Users</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/coupons">Coupons</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/category">Category</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/orders">Orders</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/banner">Banner</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/offer">Offers</a>
+                </li>
+            </ul>
+        </div>
+
+        <div style=" border-radius: 10px; border: 3px solid rgb(166, 232, 161); margin-left: 10px; margin-right: 10px; padding-top: 35px;"
+            class="container">
+
+            <table class="container text-center" style="width: 100%;">
+                <tr>
+                    <th>No:</th>
+                    <th>Coupon Code</th>
+                    <th>Discount Type</th>
+                    <th>Discount Value</th>
+                    <th>Minimum Order</th>
+                    <th>Maximum Discount</th>
+                    <th>Validity End</th>
+                    <th>Usage Limit</th>
+                    <th>Total Usage</th>
+                    <th>is_Active</th>
+                    <th>Action</th>
+                </tr>
+                <% coupons.forEach((coupon,index)=>{%>
+                    <tr>
+                        <td>
+                            <%= index+1 %>
+                        </td>
+                        <td>
+                            <strong>
+                                <%= coupon.code %>
+                            </strong>
+                        </td>
+                        <td>
+                            <%= coupon.discountType %>
+                        </td>
+                        <td>
+                            <%= coupon.discountValue %>
+                        </td>
+                        <td>
+                            ₹<%= coupon.minimumOrderAmount %>
+                        </td>
+                        <td>
+                            ₹<%= coupon.maximumDiscountAmount %>
+                        </td>
+                        <td>
+                            <%= coupon.validityEnd.toLocaleDateString() %>
+                        </td>
+                        <td>
+                            <%= coupon.usageLimit %>
+                        </td>
+                        <td>
+                            <%= coupon.totalUsageCount %>
+                        </td>
+                        <td style="color: <%= coupon.is_active ? 'green' : 'red' %>;">
+                            <strong>
+                                <%= coupon.is_active %>
+                            </strong>
+                        </td>
+                        <td>
+                            <a href="/admin/coupons/editCoupon/<%= coupon._id %>">
+                                <button class="btn btn-danger" <%=coupon.is_active ? '' : 'disabled' %>>
+                                    Edit
+                                </button>
+                            </a>
+                        </td>
+
+                    </tr>
+                    <%}) %>
+            </table>
+
+            <a href="/admin/coupon/addCoupon">
+                <button class="btn btn-outline-success">
+                    + add Coupon
+                </button>
+            </a>
+
+        </div>
+
+    </div>
+
+    <%- include('../layouts/footer') %>

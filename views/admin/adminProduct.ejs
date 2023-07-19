@@ -1,0 +1,119 @@
+<%- include('../layouts/header') %>
+
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand">Admin Panel</a>
+            <button class="btn btn-outline-success"><a style="text-decoration: none; color: black;"
+                    href="/admin/adminLogout">LogOut</a></button>
+        </div>
+    </nav>
+    <br>
+    <div style="display:flex;">
+        <div style="width: 250px; height: 850px; margin-left: 10px; border-radius: 10px; border: 3px solid rgb(166, 232, 161);"
+            class="container-fluid">
+            <ul style="list-style: none; width: 200px; height: 660px;">
+                <li style="padding-top: 30px; padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black "
+                        href="/admin/home">DashBoard</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/products">Products</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/users">Users</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/coupons">Coupons</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/category">Category</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/orders">Orders</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/banner">Banner</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/offer">Offers</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="container text-center"
+            style=" border-radius: 10px; border: 3px solid rgb(166, 232, 161); margin-left: 10px; margin-right: 10px; padding-top: 35px;">
+            <table class="container" style="width: 90%;">
+                <tr>
+                    <th>No:</th>
+                    <th>Product Image</th>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+                <% products.forEach((product, index)=> { %>
+                    <tr>
+                        <td>
+                            <%= index + 1 %>
+                        </td>
+                        <td>
+                            <img src="<%= `${product.images[product.images.length-1]}` %>"
+                                alt="<%= product.images[0] %>" style="max-width: 100px; max-height: 100px;">
+                        </td>
+                        <td>
+                            <%= product.title %>
+                        </td>
+                        <td>
+                            <%= product.category.categoryName %>
+                        </td>
+                        <td>
+                            <%= product.quantity %>
+                        </td>
+                        <td>
+                            Rs:<%= product.price %>
+                        </td>
+                        <td>
+                            <% if(product.is_available===0){ %>
+                                <form action="/admin/products/deleteProduct/<%= product._id %>" method="POST">
+                                    <button class="btn btn-danger text-black" type="submit">Delete Product</button>
+                                </form>
+                                <% } else if(product.is_available===1){%>
+                                    <form action="/admin/products/recoverProduct/<%= product._id %>" method="POST">
+                                        <button class="btn btn-success text-white" type="submit">Recover
+                                            Product</button>
+                                    </form>
+                                    <% } %>
+
+                        </td>
+                        <td>
+
+                            <form action="/admin/products/editProduct/<%= product._id %>">
+                                <button class="btn btn-success text-white" type="submit">Edit Product</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </table>
+            <br><br>
+            <button class="btn btn-outline-success"><a style="text-decoration: none; color: black;"
+                    href="/admin/products/addProducts">+ add Products</a></button>
+        </div>
+
+    </div>
+
+
+    <%- include('../layouts/footer') %>

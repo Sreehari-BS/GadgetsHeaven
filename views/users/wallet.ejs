@@ -1,0 +1,269 @@
+<%- include('../layouts/header') %>
+    <%- include('../layouts/homeHeader.ejs') %>
+            <br><br><br><br>
+
+            <div class="container text-center">
+                <h4 class="text-black"><strong>
+                        <%= user.name %>
+                    </strong>'s Wallet</h4>
+            </div>
+
+            <br><br>
+
+            <div style="min-height: 250px; border-radius: 20px; border: 5px solid rgba(0, 0, 0, 0.8)"
+                class="container text-center">
+                <br>
+                <h3 class="text-black"><strong>Balance:</strong></h3>
+                <br>
+                <h4 class="text-success"> Rs: ₹ <strong>
+                        <%= wallet.balance %>.00/-
+                    </strong></h4>
+                <br>
+                <h5 class="text-primary"><strong>History:</strong></h5>
+                <br>
+                <% if(wallet.credits.length> 0 || wallet.debits.length > 0) { %>
+                    <div class="container" style="display: flex; justify-content: space-around;">
+                        <div>
+                            <h5 class="text-success"><strong>Credits</strong></h5>
+                            <table class="text-center" style="border-collapse: collapse; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th style="border: 2px solid rgb(13, 105, 34); padding: 8px;">No:</th>
+                                        <th style="border: 2px solid rgb(13, 105, 34); padding: 8px;">Date</th>
+                                        <th style="border: 2px solid rgb(13, 105, 34); padding: 8px;">Product</th>
+                                        <th style="border: 2px solid rgb(13, 105, 34); padding: 8px;">Quantity</th>
+                                        <th style="border: 2px solid rgb(13, 105, 34); padding: 8px;">Amount Credited
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% wallet.credits.forEach((credit, index)=> { %>
+                                        <tr>
+                                            <td style="border: 2px solid rgb(13, 105, 34); padding: 8px;">
+                                                <%= index + 1 %>
+                                            </td>
+                                            <td style="border: 2px solid rgb(13, 105, 34); padding: 8px;">
+                                                <%= credit.date.toLocaleDateString() %>
+                                                    <br>
+                                                    <%= credit.date.toLocaleTimeString() %>
+                                            </td>
+                                            <td style="border: 2px solid rgb(13, 105, 34); padding: 8px;">
+                                                <%= credit.productName %>
+                                            </td>
+                                            <td style="border: 2px solid rgb(13, 105, 34); padding: 8px;">
+                                                <%= credit.quantity %>
+                                            </td>
+                                            <td style="border: 2px solid rgb(13, 105, 34); padding: 8px; color: green;">
+                                                ₹<strong>
+                                                    <%= credit.amount %>
+                                                </strong></td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <h5 class="text-danger"><strong>Debits</strong></h5>
+                            <table class="text-center"
+                                style="border-collapse: collapse; width: 100%; border: 2px solid red;">
+                                <thead>
+                                    <tr>
+                                        <th style="border: 2px solid red; padding: 8px;">No:</th>
+                                        <th style="border: 2px solid red; padding: 8px;">Date</th>
+                                        <th style="border: 2px solid red; padding: 8px;">Amount Debited</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% wallet.debits.forEach((debit, index)=> { %>
+                                        <tr>
+                                            <td style="border: 2px solid red; padding: 8px;">
+                                                <%= index + 1 %>
+                                            </td>
+                                            <td style="border: 2px solid red; padding: 8px;">
+                                                <%= debit.date.toLocaleDateString() %>
+                                                    <br>
+                                                    <%= debit.date.toLocaleTimeString() %>
+                                            </td>
+                                            <td style="color: red; border: 2px solid red; padding: 8px;">₹<strong>
+                                                    <%= debit.amount %>
+                                                </strong></td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <% } else { %>
+                        <h4 class="text-danger">No History Available</h4>
+                        <% } %>
+                            <br>
+            </div>
+
+            <br><br><br><br><br><br>
+            <footer class="bg3 p-t-75 p-b-32">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-3 p-b-50">
+                            <h4 class="stext-301 cl0 p-b-30">
+                                Categories
+                            </h4>
+
+                            <ul>
+                                <li class="p-b-10">
+                                    <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                        Smart Phones
+                                    </a>
+                                </li>
+
+                                <li class="p-b-10">
+                                    <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                        Laptops
+                                    </a>
+                                </li>
+
+                                <li class="p-b-10">
+                                    <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                        Smart Watches
+                                    </a>
+                                </li>
+
+                                <li class="p-b-10">
+                                    <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                        Audio Products
+                                    </a>
+                                </li>
+
+                                <li class="p-b-10">
+                                    <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                        Gaming Consoles
+                                    </a>
+                                </li>
+
+                                <li class="p-b-10">
+                                    <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                        Cameras
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3 p-b-50">
+                            <h4 class="stext-301 cl0 p-b-30">
+                                Help
+                            </h4>
+
+                            <ul>
+                                <li class="p-b-10">
+                                    <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                        Track Order
+                                    </a>
+                                </li>
+
+                                <li class="p-b-10">
+                                    <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                        Returns
+                                    </a>
+                                </li>
+
+                                <li class="p-b-10">
+                                    <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                        Shipping
+                                    </a>
+                                </li>
+
+                                <li class="p-b-10">
+                                    <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                        FAQs
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3 p-b-50">
+                            <h4 class="stext-301 cl0 p-b-30">
+                                GET IN TOUCH
+                            </h4>
+
+                            <p class="stext-107 cl7 size-201">
+                                Any questions? Let us know in store at 8th floor, 379 Hudson St, New
+                                York, NY 10018 or
+                                call
+                                us on (+1) 96 716 6879
+                            </p>
+
+                            <div class="p-t-27">
+                                <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+
+                                <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                                    <i class="fa fa-instagram"></i>
+                                </a>
+
+                                <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                                    <i class="fa fa-pinterest-p"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3 p-b-50">
+                            <h4 class="stext-301 cl0 p-b-30">
+                                Newsletter
+                            </h4>
+
+                            <form>
+                                <div class="wrap-input1 w-full p-b-4">
+                                    <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email"
+                                        placeholder="email@example.com">
+                                    <div class="focus-input1 trans-04"></div>
+                                </div>
+
+                                <div class="p-t-18">
+                                    <button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
+                                        Subscribe
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="p-t-40">
+                        <div class="flex-c-m flex-w p-b-18">
+                            <a href="#" class="m-all-1">
+                                <img src="/images/icons/icon-pay-01.png" alt="ICON-PAY">
+                            </a>
+
+                            <a href="#" class="m-all-1">
+                                <img src="/images/icons/icon-pay-02.png" alt="ICON-PAY">
+                            </a>
+
+                            <a href="#" class="m-all-1">
+                                <img src="/images/icons/icon-pay-03.png" alt="ICON-PAY">
+                            </a>
+
+                            <a href="#" class="m-all-1">
+                                <img src="/images/icons/icon-pay-04.png" alt="ICON-PAY">
+                            </a>
+
+                            <a href="#" class="m-all-1">
+                                <img src="/images/icons/icon-pay-05.png" alt="ICON-PAY">
+                            </a>
+                        </div>
+
+                        <p class="stext-107 cl6 txt-center">
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;
+                            <script>document.write(new Date().getFullYear());</script> All rights
+                            reserved | Made with
+                            <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="" target="_blank">Sreehari</a>
+                            &amp; distributed by <a href="" target="_blank">ThemeWagon</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+
+                        </p>
+                    </div>
+                </div>
+            </footer>
+
+            <%- include('../layouts/homeFooter.ejs') %>
+                <%- include('../layouts/footer') %>

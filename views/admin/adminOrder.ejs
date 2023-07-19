@@ -1,0 +1,182 @@
+<%- include('../layouts/header') %>
+
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand">Admin Panel</a>
+            <button class="btn btn-outline-success"><a style="text-decoration: none; color: black;"
+                    href="/admin/adminLogout">LogOut</a></button>
+        </div>
+    </nav>
+    <br>
+    <div style="display:flex;">
+        <div style="width: 250px; height: 850px; margin-left: 10px; border-radius: 10px; border: 3px solid rgb(166, 232, 161);"
+            class="container-fluid">
+            <ul style="list-style: none; width: 200px; height: 660px;">
+                <li style="padding-top: 30px; padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black "
+                        href="/admin/home">DashBoard</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/products">Products</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/users">Users</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/coupons">Coupons</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/category">Category</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/orders">Orders</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/banner">Banner</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/offer">Offers</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="text-center"
+            style=" border-radius: 10px; border: 3px solid rgb(166, 232, 161); margin-left: 10px; margin-right: 10px; padding-top: 35px;">
+            <table class="container-fluid" style="width: 100%;">
+                <tr>
+                    <th>Product Image</th>
+                    <th>Product Name</th>
+                    <th>Username</th>
+                    <th>Shipping Details</th>
+                    <th>Date</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Payment Method</th>
+                    <th>Current Status</th>
+                    <th>Change Status</th>
+                </tr>
+                <% let currentTime=null; %>
+                    <% let currentUserId=null; %>
+                        <% for (let i=0; i < orders.length; i++) { %>
+                            <% const order=orders[i]; %>
+                                <% for (let j=0; j < order.purchasedProducts.length; j++) { %>
+                                    <% const purchasedProduct=order.purchasedProducts[j]; %>
+                                        <% const orderTime=purchasedProduct.date.toLocaleTimeString(); %>
+                                            <% const userId=purchasedProduct.userName; %>
+                                                <% if (orderTime !==currentTime || userId !==currentUserId) { %>
+                                                    <% currentTime=orderTime; %>
+                                                        <% currentUserId=userId; %>
+                                                            <tr>
+                                                                <td colspan="10" class="text-center">
+                                                                    <br>
+                                                                    <button class=" btn btn-secondary text-center"
+                                                                        style="border-radius: 20px; pointer-events: none;">
+                                                                        <h6><strong>
+                                                                                <%= currentUserId %>,<%= currentTime %>
+                                                                            </strong></h6>
+                                                                    </button>
+                                                                    <a href="/admin/detailedOrder/<%= purchasedProduct.date %>/<%= order.cart %>" class="btn btn-primary" style="border-radius: 20px;"><strong>View fullDetails</strong></a>
+                                                                </td>
+                                                            </tr>
+                                                            <% } %>
+                                                                <tr>
+                                                                    <td><img src="<%= purchasedProduct.product.images[2] %>"
+                                                                            alt="Product Image" width="100"></td>
+                                                                    <td>
+                                                                        <%= purchasedProduct.product.title %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= purchasedProduct.userName %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <strong>
+                                                                            <%= purchasedProduct.address.name %>
+                                                                        </strong>
+                                                                        <br>
+                                                                        <%= purchasedProduct.address.houseName %>,
+                                                                            <%= purchasedProduct.address.place %> PO,
+                                                                                <%= purchasedProduct.address.city %>,
+                                                                                    <br>
+                                                                                    <%= purchasedProduct.address.district
+                                                                                        %>,
+                                                                                        <%= purchasedProduct.address.state
+                                                                                            %>,
+                                                                                            <strong>PIN:<%=
+                                                                                                    purchasedProduct.address.pinCode
+                                                                                                    %></strong>
+                                                                                            <br>
+                                                                                            <strong>Phone:<%=
+                                                                                                    purchasedProduct.address.phoneNumber
+                                                                                                    %></strong>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= purchasedProduct.date.toLocaleDateString()
+                                                                            %>
+                                                                            <br>
+                                                                            <%= purchasedProduct.date.toLocaleTimeString()
+                                                                                %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= purchasedProduct.quantity %>
+                                                                    </td>
+                                                                    <td>
+                                                                        ₹<%= purchasedProduct.product.price %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= purchasedProduct.paymentMethod %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= purchasedProduct.status %>
+                                                                    </td>
+                                                                    <% if(purchasedProduct.status !=="Delivered" &&
+                                                                        purchasedProduct.status !=="Returned" &&
+                                                                        purchasedProduct.status !=="Cancelled" ) { %>
+                                                                        <td>
+                                                                            <form
+                                                                                action="/admin/orders/updateOrderStatus/<%= order._id %>/<%= purchasedProduct.product._id %>/<%= purchasedProduct._id %>"
+                                                                                method="post">
+                                                                                <select class="form-control my-3 py-2"
+                                                                                    name="status">
+                                                                                    <option value="" disabled selected>
+                                                                                        Change Status</option>
+                                                                                    <option value="Pending">Pending
+                                                                                    </option>
+                                                                                    <option value="Processing">
+                                                                                        Processing</option>
+                                                                                    <option value="Shipped">Shipped
+                                                                                    </option>
+                                                                                    <option value="Delivered">Delivered
+                                                                                    </option>
+                                                                                </select>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button type="submit"
+                                                                                class="btn btn-success">Update</button>
+                                                                        </td>
+                                                                        </form>
+                                                                        </td>
+                                                                        <% } %>
+                                                                </tr>
+                                                                <% } %>
+                                                                    <% } %>
+            </table>
+
+        </div>
+    </div>
+
+
+    <%- include('../layouts/footer') %>

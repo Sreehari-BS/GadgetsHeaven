@@ -1,0 +1,51 @@
+<%- include('../layouts/header') %>
+
+    <div style="background-color: aquamarine; height: 100vh;">
+        <button style="margin-left: 10px; margin-top: 10px;" class="btn btn-primary"><a
+                style="text-decoration: none; color: rgb(255, 255, 255);" href="/admin/products">Go Back</a></button>
+        <div class="container-fluid h-100">
+            <div class="row h-100">
+                <div class="col-12 col-sm-8 col-md-6 m-auto">
+                    <div class="card border-0 shadow">
+                        <div class="card-body">
+                            <h4 style="color:rgb(64, 64, 218);" class="text-center">Add Products</h4>
+                            <form action="/admin/products/addProducts" method="post" enctype="multipart/form-data">
+                                <input type="text" class="form-control my-3 py-2" name="title"
+                                    placeholder="Product Name" required>
+                                <div class="form-group">
+                                    <select class="form-control my-3 py-2" name="category" required>
+                                        <option value="" disabled selected>Select Category</option>
+                                        <% categories.forEach((category)=> { %>
+                                            <option value="<%= category._id %>">
+                                                <%= category.categoryName %>
+                                            </option>
+                                            <% }) %>
+                                    </select>
+                                </div>
+                                <input type="number" class="form-control my-3 py-2" name="quantity" min="0"
+                                    pattern="[0-9]" title="Please enter number" placeholder="Quantity" required>
+                                <input type="tel" class="form-control my-3 py-2" name="price" placeholder="Price"
+                                    pattern="[0-9]+" title="Please enter numbers only" required>
+                                <div class="form-group">
+                                    <textarea class="form-control" placeholder="Description" name="description" rows="4"
+                                        required></textarea>
+                                </div>
+                                <input type="file" class="form-control my-3 py-2" name="images" multiple required>
+                                <div class="text-center mt-3">
+                                    <button type="submit" class="btn btn-primary">ADD</button>
+                                    <% if(typeof message !=="undefined" ){ %>
+                                        <br>
+                                        <p style="color: green;">
+                                            <%= message %>
+                                        </p>
+                                        <% } %>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../layouts/footer') %>

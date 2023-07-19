@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Gadgets Heaven</title>
+	<link rel="stylesheet" href="/magiczoom/magiczoom.css">
+</head>
+
+<body>
+	<%- include('../layouts/homeHeader.ejs') %>
+			<br>
+			<section class="sec-product-detail bg0 p-t-65 p-b-60">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-6 col-lg-7 p-b-30">
+							<div class="p-l-25 p-r-30 p-lr-0-lg">
+								<div class="wrap-slick3 flex-sb flex-w">
+									<div class="wrap-slick3-dots"></div>
+									<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
+
+									<div class="slick3 gallery-lb">
+										<% for(i=0;i<product.images.length;i++){ %>
+											<div class="item-slick3"
+												data-thumb="<%= product.images[i] %>">
+												<div style="background-image: url('/images/backdrop.jpg'); height: 600px; display: flex; justify-content: center; align-items: center;"
+													class="wrap-pic-w pos-relative">
+													<a href="<%= product.images[i] %>" class="MagicZoom">
+														<img style="max-height: 600px;"
+															src="<%= product.images[i] %>"
+															alt="IMG-PRODUCT">
+													</a>
+												</div>
+											</div>
+											<% } %>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-6 col-lg-5 p-b-30">
+							<div class="p-r-50 p-t-5 p-lr-0-lg">
+								<h4 class="mtext-105 cl2 js-name-detail p-b-14">
+									<%= product.title%>
+								</h4>
+
+								<span class="mtext-106 cl2">
+									₹ <%= product.price%>
+								</span>
+
+								<p class="stext-102 cl3 p-t-23">
+									<%= product.description%>
+								</p>
+
+								<% if(user){ %>
+									<form action="/home/productDetails/<%= user._id %>/<%= product._id %>"
+										method="post">
+										<div class="wrap-num-product flex-w m-r-20 m-tb-10">
+											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+												<i class="fs-16 zmdi zmdi-minus"></i>
+											</div>
+											<input class="mtext-104 cl3 txt-center num-product" type="number"
+												name="numOfProducts" value="1">
+
+											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+												<i class="fs-16 zmdi zmdi-plus"></i>
+											</div>
+										</div>
+										<button
+											class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+											Add to cart
+										</button>
+									</form>
+									<% } else { %>
+										<form action="/login" method="get">
+											<div class="wrap-num-product flex-w m-r-20 m-tb-10">
+												<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+													<i class="fs-16 zmdi zmdi-minus"></i>
+												</div>
+												<input class="mtext-104 cl3 txt-center num-product" type="number"
+													name="numOfProducts" value="1">
+
+												<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+													<i class="fs-16 zmdi zmdi-plus"></i>
+												</div>
+											</div>
+											<button
+												class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+												Add to cart
+											</button>
+										</form>
+										<% } %>
+											<br>
+
+											<% if(typeof message !=="undefined" ){ %>
+												<strong>
+													<p style="color: red;">
+														<%= message %>
+													</p>
+												</strong>
+												<% } %>
+
+													<!--  -->
+													<div class="flex-w flex-m p-l-100 p-t-40 respon7">
+														<div class="flex-m bor9 p-r-10 m-r-11">
+															<a href="#"
+																class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100"
+																data-tooltip="Add to Wishlist">
+																<i class="zmdi zmdi-favorite"></i>
+															</a>
+														</div>
+
+														<a href="#"
+															class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
+															data-tooltip="Facebook">
+															<i class="fa fa-facebook"></i>
+														</a>
+
+														<a href="#"
+															class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
+															data-tooltip="Twitter">
+															<i class="fa fa-twitter"></i>
+														</a>
+
+														<a href="#"
+															class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
+															data-tooltip="Google Plus">
+															<i class="fa fa-google-plus"></i>
+														</a>
+													</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<%- include('../layouts/homeFooter.ejs') %>
+				<script src="/magiczoom/magiczoom.js"></script>
+</body>
+
+</html>

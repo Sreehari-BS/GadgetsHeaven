@@ -1,0 +1,240 @@
+<%- include('../layouts/header') %>
+
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand">Admin Panel</a>
+            <button class="btn btn-outline-success"><a style="text-decoration: none; color: black;"
+                    href="/admin/adminLogout">LogOut</a></button>
+        </div>
+    </nav>
+    <br>
+    <div style="display:flex;">
+        <div style="width: 250px; height: 850px; margin-left: 10px; border-radius: 10px; border: 3px solid rgb(166, 232, 161);"
+            class="container-fluid">
+            <ul style="list-style: none; width: 200px; height: 660px;">
+                <li style="padding-top: 30px; padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black "
+                        href="/admin/home">DashBoard</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/products">Products</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/users">Users</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/coupons">Coupons</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/category">Category</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/orders">Orders</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/banner">Banner</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/offer">Offers</a>
+                </li>
+            </ul>
+        </div>
+
+        <div style="border-radius: 10px; border: 3px solid rgb(166, 232, 161); margin-left: 10px; margin-right: 10px; padding-top: 35px;"
+            class="container">
+
+            <div class="d-flex justify-content-between">
+                <div class="card border-0 shadow mb-3" style="flex-basis: 18rem; width: 18rem;">
+                    <div class="card-header text-center">
+                        <h5>Total</h5>
+                    </div>
+                    <div class="card-body text-danger text-center">
+                        <h5 class="card-title"><strong>ORDERS</strong></h5>
+                        <p class="card-text">
+                        <h1>
+                            <%= totalOrders %>
+                        </h1>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow mb-3" style="flex-basis: 18rem; width: 18rem;">
+                    <div class="card-header text-center">
+                        <h5>Total</h5>
+                    </div>
+                    <div class="card-body text-success text-center">
+                        <h5 class="card-title"><strong>SUCCESSFUL SALES</strong></h5>
+                        <p class="card-text">
+                        <h1>
+                            <%= sales %>
+                        </h1>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow mb-3" style="flex-basis: 18rem; width: 18rem;">
+                    <div class="card-header text-center">
+                        <h5>Total</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title"><strong>RETURNED</strong></h5>
+                        <p class="card-text">
+                        <h1>
+                            <%= returns %>
+                        </h1>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow mb-3" style="flex-basis: 18rem; width: 18rem;">
+                    <div class="card-header text-center">
+                        <h5>Total</h5>
+                    </div>
+                    <div class="card-body text-warning text-center">
+                        <h5 class="card-title"><strong>CANCELLED</strong></h5>
+                        <p class="card-text">
+                        <h1>
+                            <%= cancelled %>
+                        </h1>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <br><br>
+            <div style="display: flex; justify-content: space-evenly;">
+                <div class="card border-0 shadow" style="width: 50%;">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary"><strong>CATEGORYWISE ORDERS</strong></h5>
+                        <br>
+                        <table>
+                            <tr>
+                                <th style="padding-bottom: 20px;" class="container">CATEGORY</th>
+                                <th style="padding-bottom: 20px;" class="container">ORDERS</th>
+                                <th style="padding-bottom: 20px;" class="container">SALES</th>
+                                <th style="padding-bottom: 20px;" class="container">RETURNED</th>
+                                <th style="padding-bottom: 20px;" class="container">CANCELLED</th>
+                            </tr>
+                            <% categoryData.forEach((category)=> {
+                                let productCount = 0;
+                                let sales = 0;
+                                let returned = 0;
+                                let cancelled = 0;
+                                %>
+                                <tr>
+                                    <td class="container" style="padding-bottom: 20px;">
+                                        <img style="width: 40px; height: auto;"
+                                            src="/categoryImages/<%= category.categoryImage %>" alt="">
+                                        <strong>
+                                            <%= category.categoryName %>
+                                        </strong>
+                                    </td>
+                                    <td class="text-center text-danger" style="padding-bottom: 20px;">
+                                        <% orderData.forEach((item)=> {
+                                            item.purchasedProducts.forEach((product) => {
+                                            if (product.product.category.toString() === category._id.toString()) {
+                                            productCount += product.quantity
+                                            if(product.status === "Delivered"){
+                                            sales += product.quantity
+                                            }else if(product.status === "Returned"){
+                                            returned += product.quantity
+                                            }else if(product.status === "Cancelled"){
+                                            cancelled += product.quantity
+                                            }
+                                            }
+                                            });
+                                            });
+                                            %>
+                                            <strong>
+                                                <%= productCount %>
+                                            </strong>
+                                    </td>
+                                    <td class="text-center text-success" style="padding-bottom: 20px;">
+                                        <strong>
+                                            <%= sales %>
+                                        </strong>
+                                    </td>
+                                    <td class="text-center" style="padding-bottom: 20px;">
+                                        <strong>
+                                            <%= returned %>
+                                        </strong>
+                                    </td>
+                                    <td class="text-center text-warning" style="padding-bottom: 20px;">
+                                        <strong>
+                                            <%= cancelled %>
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                        </table>
+
+                    </div>
+                </div>
+                <div style="margin-left: 20px;"></div>
+                <div class="card border-0 shadow" style="width: 45%;">
+                    <div class="card-body">
+                        <h5 class="card-title" style="color: burlywood;"><strong>CATEGORYWISE SALES</strong></h5>
+                        <br>
+                        <table>
+                            <tr>
+                                <th style="padding-bottom: 20px;" class="container">CATEGORY</th>
+                                <th style="padding-bottom: 20px;" class="container">SALE</th>
+                            </tr>
+                            <% categoryData.forEach((category)=> {
+                                let salePrice = 0;
+                                %>
+                                <tr>
+                                    <td class="container" style="padding-bottom: 20px;">
+                                        <img style="width: 40px; height: auto;"
+                                            src="/categoryImages/<%= category.categoryImage %>" alt="">
+                                        <strong>
+                                            <%= category.categoryName %>
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary" style="padding-bottom: 20px;">
+                                        <% orderData.forEach((item)=> {
+                                            item.purchasedProducts.forEach((product) => {
+                                            if (product.product.category.toString() === category._id.toString()) {
+                                            if(product.status === "Delivered"){
+                                            salePrice += (product.quantity * product.product.price)
+                                            }
+                                            }
+                                            });
+                                            });
+                                            %>
+                                            <strong>₹<%= salePrice.toFixed(2) %>/-</strong>
+
+                                    </td>
+                                </tr>
+                                <% }) %>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="text-center">
+                <a href="/admin/home/loadMore"><button class="btn card border-0 shadow"
+                        style="display: inline-block; background-color: burlywood;">
+                        <strong>Load More >>></strong>
+                    </button>
+                </a>
+            </div>
+
+        </div>
+
+
+        <%- include('../layouts/footer') %>

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Gadgets Heaven</title>
+	<link rel="stylesheet" href="/magiczoom/magiczoom.css">
+</head>
+
+<body>
+	<%- include('../layouts/homeHeader.ejs') %>
+
+			<br>
+			<section class="sec-product-detail bg0 p-t-65 p-b-60">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-6 col-lg-7 p-b-30">
+							<div class="p-l-25 p-r-30 p-lr-0-lg">
+								<div class="wrap-slick3 flex-sb flex-w">
+									<div class="wrap-slick3-dots"></div>
+									<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
+
+									<div class="slick3 gallery-lb">
+										<% for(i=0;i<product.images.length;i++){ %>
+											<div class="item-slick3"
+												data-thumb="<%= product.images[i] %>">
+												<div style="background-image: url('/images/backdrop.jpg'); height: 600px; display: flex; justify-content: center; align-items: center;"
+													class="wrap-pic-w pos-relative">
+													<a href="<%= product.images[i] %>" class="MagicZoom">
+														<img style="max-height: 600px;"
+															src="<%= product.images[i] %>"
+															alt="IMG-PRODUCT">
+													</a>
+												</div>
+											</div>
+											<% } %>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-6 col-lg-5 p-b-30">
+							<div class="p-r-50 p-t-5 p-lr-0-lg">
+								<h4 class="mtext-105 cl2 js-name-detail p-b-14">
+									<%= product.title%>
+								</h4>
+
+								<span class="mtext-106 cl2">
+									<% if (offer && offer.is_available) { %>
+										<del>₹ <%= product.price %></del>
+										<% } else { %>
+											₹ <%= product.price %>
+												<% } %>
+								</span>
+
+								<% if(product.quantity <=5 && product.quantity>= 1){
+									%>
+									<p class="text-danger"><strong>Only <%= product.quantity %>
+												Availble</strong></p>
+									<% }else if(product.quantity===0){ %>
+										<h5 class="text-danger"><strong>Out of Quantity</strong></h5>
+										<% } %>
+
+
+											<% if(offer && offer.is_available){%>
+												<h4><strong>Offer Price: ₹</strong><strong class="text-success">
+														<%= Math.round(product.price - (product.price *
+															(offer.offerDiscount/100))) %>.00/-
+													</strong></h4>
+												<%} %>
+
+													<p class="stext-102 cl3 p-t-23">
+														<%= product.description%>
+													</p>
+
+													<% if(user){ %>
+														<form
+															action="/home/productDetails/<%= user._id %>/<%= product._id %>"
+															method="post">
+															<div class="wrap-num-product flex-w m-r-20 m-tb-10">
+																<div
+																	class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+																	<i class="fs-16 zmdi zmdi-minus"></i>
+																</div>
+																<input class="mtext-104 cl3 txt-center num-product"
+																	type="number" name="numOfProducts" value="1">
+
+																<div
+																	class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+																	<i class="fs-16 zmdi zmdi-plus"></i>
+																</div>
+															</div>
+															<% if(product.quantity===0){%>
+																<button style="opacity: 0.6; pointer-events: none;"
+																	class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+																	Add to cart
+																</button>
+																<%}else{%>
+																	<button
+																		class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+																		Add to cart
+																	</button>
+																	<%} %>
+														</form>
+														<% } else { %>
+															<form action="/login" method="get">
+																<div class="wrap-num-product flex-w m-r-20 m-tb-10">
+																	<div
+																		class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+																		<i class="fs-16 zmdi zmdi-minus"></i>
+																	</div>
+																	<input class="mtext-104 cl3 txt-center num-product"
+																		type="number" name="numOfProducts" value="1">
+
+																	<div
+																		class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+																		<i class="fs-16 zmdi zmdi-plus"></i>
+																	</div>
+																</div>
+																<button
+																	class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+																	Add to cart
+																</button>
+															</form>
+															<% } %>
+																<br>
+																<a href="/home/shopingCart/<%= cart._id %>"><button
+																		class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+																		Go to cart
+																	</button></a>
+																<br>
+																<% if(typeof message !=="undefined" ){ %>
+																	<strong>
+																		<p style="color: red;">
+																			<%= message %>
+																		</p>
+																	</strong>
+																	<% } %>
+
+																		<!--  -->
+																		<div
+																			class="flex-w flex-m p-l-100 p-t-40 respon7">
+																			<div class="flex-m bor9 p-r-10 m-r-11">
+																				<a href="#"
+																					class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100"
+																					data-tooltip="Add to Wishlist">
+																					<i class="zmdi zmdi-favorite"></i>
+																				</a>
+																			</div>
+
+																			<a href="#"
+																				class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
+																				data-tooltip="Facebook">
+																				<i class="fa fa-facebook"></i>
+																			</a>
+
+																			<a href="#"
+																				class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
+																				data-tooltip="Twitter">
+																				<i class="fa fa-twitter"></i>
+																			</a>
+
+																			<a href="#"
+																				class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
+																				data-tooltip="Google Plus">
+																				<i class="fa fa-google-plus"></i>
+																			</a>
+																		</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="container">
+					<h3 style="border-bottom: 1px solid black; padding-bottom: 0.5em;"><strong>Ratings &
+							Reviews</strong></h3>
+				</div>
+				<br>
+				<% let reviewButtonDisplayed=false; %>
+
+					<% if (orders && orders.purchasedProducts.length> 0) {
+						orders.purchasedProducts.forEach((item) => {
+						if (item.product.toString() === product._id.toString() && !reviewButtonDisplayed) {
+						reviewButtonDisplayed = true; %>
+						<div class="container" style="display: flex; justify-content: space-between;">
+							<div
+								style="border: 2px solid rgb(23, 158, 50); width: 70px; height: 35px; border-radius: 10px;">
+								<h2 class="txt-center text-danger"><strong>
+										<%= calculateAverageRating(reviews) %>
+									</strong></h2>
+							</div>
+							<div>
+								<a href="/review/<%= product._id %>">
+									<button class="btn btn-success">Write a Review</button>
+								</a>
+							</div>
+						</div>
+						<% } }); } %>
+
+							<br>
+							<% reviews.forEach((review)=> { %>
+								<% if (review.review && review.review.length> 0) { %>
+									<% review.review.forEach((section)=> { %>
+										<% if (section.product.toString()===product._id.toString()) { %>
+											<div style="height: 200px; width: 80%; border: solid 2px black; border-radius: 10px;"
+												class="container">
+												<div class="container" style="padding: 10px;">
+
+													<div>
+														<h5
+															style="border: solid 2px green; border-radius: 3px; color: green; display: inline; padding: 0 10px;">
+															<strong>
+																<%= section.rating %>
+															</strong>
+														</h5>
+														<h5 style="display: inline; padding-left: 10px;">
+															<strong>
+																<%= review.user.name %>
+															</strong>
+														</h5>
+													</div>
+													<br>
+													<div>
+														<p>
+															<%= section.date.toDateString() %>
+																<p>
+													</div>
+													<br>
+													<div>
+														<h6>
+															<%= section.content %>
+														</h6>
+													</div>
+													<br>
+													<div style="text-align: right;">
+														<% if (review.user.name===user.name) { %>
+															<a href="/updateReview/<%= product._id %>/<%= user._id %>"><button
+																	class="btn btn-outline-danger">Update
+																	Review</button></a>
+															<% } %>
+													</div>
+												</div>
+											</div>
+											<br>
+											<% } %>
+												<% }); %>
+													<% } %>
+														<% }); %>
+
+
+
+															<% function calculateAverageRating(reviews) { let count=0;
+																let ratingTotal=0; reviews.forEach((review)=> {
+																if (review.review && review.review.length > 0) {
+																review.review.forEach((section) => {
+																if (section.product.toString() ===
+																product._id.toString()) {
+																count++;
+																ratingTotal += section.rating;
+																}
+																});
+																}
+																});
+
+																return count > 0 ? (ratingTotal / count).toFixed(1) :
+																'';
+																} %>
+
+
+
+
+
+			</section>
+
+			<footer class="bg3 p-t-75 p-b-32">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-6 col-lg-3 p-b-50">
+							<h4 class="stext-301 cl0 p-b-30">
+								Categories
+							</h4>
+
+							<ul>
+								<li class="p-b-10">
+									<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+										Smart Phones
+									</a>
+								</li>
+
+								<li class="p-b-10">
+									<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+										Laptops
+									</a>
+								</li>
+
+								<li class="p-b-10">
+									<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+										Smart Watches
+									</a>
+								</li>
+
+								<li class="p-b-10">
+									<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+										Audio Products
+									</a>
+								</li>
+
+								<li class="p-b-10">
+									<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+										Gaming Consoles
+									</a>
+								</li>
+
+								<li class="p-b-10">
+									<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+										Cameras
+									</a>
+								</li>
+							</ul>
+						</div>
+
+						<div class="col-sm-6 col-lg-3 p-b-50">
+							<h4 class="stext-301 cl0 p-b-30">
+								Help
+							</h4>
+
+							<ul>
+								<li class="p-b-10">
+									<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+										Track Order
+									</a>
+								</li>
+
+								<li class="p-b-10">
+									<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+										Returns
+									</a>
+								</li>
+
+								<li class="p-b-10">
+									<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+										Shipping
+									</a>
+								</li>
+
+								<li class="p-b-10">
+									<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+										FAQs
+									</a>
+								</li>
+
+							</ul>
+						</div>
+
+						<div class="col-sm-6 col-lg-3 p-b-50">
+							<h4 class="stext-301 cl0 p-b-30">
+								GET IN TOUCH
+							</h4>
+
+							<p class="stext-107 cl7 size-201">
+								Any questions? Let us know in store at 8th floor, 379 Hudson St, New
+								York, NY 10018 or
+								call
+								us on (+1) 96 716 6879
+							</p>
+
+							<div class="p-t-27">
+								<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+									<i class="fa fa-facebook"></i>
+								</a>
+
+								<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+									<i class="fa fa-instagram"></i>
+								</a>
+
+								<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+									<i class="fa fa-pinterest-p"></i>
+								</a>
+							</div>
+						</div>
+
+						<div class="col-sm-6 col-lg-3 p-b-50">
+							<h4 class="stext-301 cl0 p-b-30">
+								Newsletter
+							</h4>
+
+							<form>
+								<div class="wrap-input1 w-full p-b-4">
+									<input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email"
+										placeholder="email@example.com">
+									<div class="focus-input1 trans-04"></div>
+								</div>
+
+								<div class="p-t-18">
+									<button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
+										Subscribe
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+
+					<div class="p-t-40">
+						<div class="flex-c-m flex-w p-b-18">
+							<a href="#" class="m-all-1">
+								<img src="/images/icons/icon-pay-01.png" alt="ICON-PAY">
+							</a>
+
+							<a href="#" class="m-all-1">
+								<img src="/images/icons/icon-pay-02.png" alt="ICON-PAY">
+							</a>
+
+							<a href="#" class="m-all-1">
+								<img src="/images/icons/icon-pay-03.png" alt="ICON-PAY">
+							</a>
+
+							<a href="#" class="m-all-1">
+								<img src="/images/icons/icon-pay-04.png" alt="ICON-PAY">
+							</a>
+
+							<a href="#" class="m-all-1">
+								<img src="/images/icons/icon-pay-05.png" alt="ICON-PAY">
+							</a>
+						</div>
+
+						<p class="stext-107 cl6 txt-center">
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							Copyright &copy;
+							<script>document.write(new Date().getFullYear());</script> All rights
+							reserved | Made with
+							<i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="" target="_blank">Sreehari</a>
+							&amp; distributed by <a href="" target="_blank">ThemeWagon</a>
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+
+						</p>
+					</div>
+				</div>
+			</footer>
+			
+			<%- include('../layouts/homeFooter.ejs') %>
+				<script src="/magiczoom/magiczoom.js"></script>
+
+
+
+</body>
+
+</html>

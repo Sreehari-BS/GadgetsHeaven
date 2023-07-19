@@ -1,0 +1,112 @@
+<%- include('../layouts/header') %>
+
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand">Admin Panel</a>
+            <button class="btn btn-outline-success"><a style="text-decoration: none; color: black;"
+                    href="/admin/adminLogout">LogOut</a></button>
+        </div>
+    </nav>
+    <br>
+    <div style="display:flex;">
+        <div style="width: 250px; height: 850px; margin-left: 10px; border-radius: 10px; border: 3px solid rgb(166, 232, 161);"
+            class="container-fluid">
+            <ul style="list-style: none; width: 200px; height: 660px;">
+                <li style="padding-top: 30px; padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black "
+                        href="/admin/home">DashBoard</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/products">Products</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/users">Users</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/coupons">Coupons</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/category">Category</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/orders">Orders</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/banner">Banner</a>
+                </li>
+                <br><br><br>
+                <li style="padding-left: 15px;">
+                    <a style="text-decoration: none; font-size: 25px; font-weight: 400;" class="text-black"
+                        href="/admin/offer">Offers</a>
+                </li>
+            </ul>
+        </div>
+
+        <div style=" border-radius: 10px; border: 3px solid rgb(166, 232, 161); margin-left: 10px; margin-right: 10px; padding-top: 35px;"
+            class="container">
+
+            <table class="container text-center" style="width: 90%;">
+                <tr>
+                    <th>No:</th>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                </tr>
+                <% banners.forEach((banner,index)=>{%>
+                    <tr>
+                        <td>
+                            <%= index+1 %>
+                        </td>
+                        <td>
+                            <img src="<%= `bannerImages/${banner.bannerImage}` %>" alt="<%= banner.bannerImage %>"
+                                style="max-width: 200px; max-height: 200px;">
+                        </td>
+                        <td>
+                            <%= banner.title %>
+                        </td>
+                        <td>
+                            <%= banner.category.categoryName %>
+                        </td>
+                        <td>
+                            <%= banner.description %>
+                        </td>
+                        <td>
+                            <% if(banner.isActive===true){ %>
+                                <form action="/admin/banner/deleteBanner/<%= banner._id %>" method="POST">
+                                    <button class="btn btn-danger text-white" type="submit">Delete</button>
+                                </form>
+                                <% } else if(banner.isActive===false){%>
+                                    <form action="/admin/banner/recoverBanner/<%= banner._id %>" method="POST">
+                                        <button class="btn btn-success text-white" type="submit">Recover</button>
+                                    </form>
+                                    <% } %>
+                        </td>
+                        <td>
+                            <a href="/admin/banner/editBanner/<%= banner._id %>">
+                                <button class="btn btn-success text-white">Edit</button>
+                            </a>
+                        </td>
+                    </tr>
+                    <%}) %>
+            </table>
+
+            <button class="btn btn-outline-success"><a style="text-decoration: none; color: black;"
+                    href="/admin/banner/addBanner">+ add Banners</a></button>
+        </div>
+
+    </div>
+
+    <%- include('../layouts/footer') %>

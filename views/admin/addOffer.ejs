@@ -1,0 +1,98 @@
+<%- include('../layouts/header') %>
+
+    <div style="background-color: aquamarine; height: 100vh;">
+        <button style="margin-left: 10px; margin-top: 10px;" class="btn btn-primary"><a
+                style="text-decoration: none; color: rgb(255, 255, 255);" href="/admin/offer">Go Back</a></button>
+        <div class="container-fluid h-100">
+            <div class="row h-100">
+                <div class="col-12 col-sm-8 col-md-6 m-auto">
+                    <div class="card border-0 shadow">
+                        <div class="card-body">
+                            <h4 style="color:rgb(64, 64, 218);" class="text-center">Add Offer</h4>
+                            <form action="/admin/offer/addOffer" method="post">
+                                <input type="text" class="form-control my-3 py-2" name="offerTitle"
+                                    placeholder="Offer Title" required>
+                                <div class="form-group">
+                                    <select class="form-control my-3 py-2" name="offerType" id="offerType" required>
+                                        <option value="" disabled selected>Select Offer Type</option>
+                                        <option value="Product_Offer">Product Offer</option>
+                                        <option value="Category_Offer">Category Offer</option>
+                                        <option value="Referral_Offer">Referral Offer</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control my-3 py-2" name="product" id="product" required>
+                                        <option value="" disabled selected>Select Target Product</option>
+                                        <% products.forEach((product)=>{%>
+                                            <option value="<%= product._id %>">
+                                                <%= product.title %>
+                                            </option>
+                                            <%}) %>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control my-3 py-2" name="category" id="category" required>
+                                        <option value="" disabled selected>Select Category</option>
+                                        <% categories.forEach((category)=> { %>
+                                            <option value="<%= category._id %>">
+                                                <%= category.categoryName %>
+                                            </option>
+                                            <% }) %>
+                                    </select>
+                                </div>
+                                <input type="text" class="form-control my-3 py-2" name="referralCode" id="referralCode"
+                                    placeholder="Referral Code" required>
+                                <input type="tel" class="form-control my-3 py-2" name="offerDiscount"
+                                    placeholder="Discount in %" required>
+                                <div class="form-control my-3 py-2">
+                                    <label for="validityStart">Offer Starting Date:</label>
+                                    <input type="date" name="startDate" required>
+                                </div>
+                                <div class="form-control my-3 py-2">
+                                    <label for="validityEnd">Offer End Date:</label>
+                                    <input type="date" name="endDate" required>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <button type="submit" class="btn btn-primary">ADD</button>
+                                    <% if(typeof message !=="undefined" ){ %>
+                                        <br>
+                                        <p style="color: green;">
+                                            <%= message %>
+                                        </p>
+                                        <% } %>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const offerTypeDropdown = document.getElementById('offerType')
+        const productDropdown = document.getElementById('product')
+        const categoryDropdown = document.getElementById('category')
+        const referralCodeField = document.getElementById('referralCode')
+
+        offerTypeDropdown.addEventListener('change', function () {
+            const selectedOfferType = offerTypeDropdown.value
+
+            if (selectedOfferType === 'Product_Offer') {
+                productDropdown.disabled = false
+                categoryDropdown.disabled = true
+                referralCodeField.disabled = true
+            } else if (selectedOfferType === 'Category_Offer') {
+                productDropdown.disabled = true
+                categoryDropdown.disabled = false
+                referralCodeField.disabled = true
+            } else if (selectedOfferType === 'Referral_Offer') {
+                productDropdown.disabled = true
+                categoryDropdown.disabled = true
+                referralCodeField.disabled = false;
+            }
+        })
+    </script>
+
+
+    <%- include('../layouts/footer') %>
