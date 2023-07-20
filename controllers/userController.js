@@ -867,7 +867,7 @@ const cancelOrder = async (req, res) => {
       const purchasedProduct = order.purchasedProducts[purchasedProductIndex];
       const { paymentMethod } = purchasedProduct;
 
-      if (paymentMethod === 'razor_pay') {
+      if (paymentMethod === 'razor_pay' || paymentMethod === 'Wallet') {
         let wallet = await Wallet.findOne({ user: userId });
 
         if (!wallet) {

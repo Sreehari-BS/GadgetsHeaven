@@ -19,8 +19,8 @@
                             <div class="text-center mt-3">
                                 <button type="submit" class="btn btn-primary">Verify</button>
                         </form>
-                        <a href="/resendOTP/<%= phoneNumber %>"><button class="btn btn-danger" id="resendBtn"
-                                disabled>Resend OTP</button></a>
+                        <a href="/resendOTP/<%= phoneNumber %>"><button class="btn btn-danger mt-2" id="resendBtn"
+                                style="display: none;">Resend OTP</button></a>
                         <span id="timer"></span>
                         <% if(typeof message !=="undefined" ){ %>
                             <br>
@@ -39,25 +39,22 @@
 
     <%- include('../layouts/footer') %>
 
-        <style>
-            #resendBtn[disabled] {
-                pointer-events: none;
-            }
-        </style>
-
         <script>
             const resendBtn = document.getElementById("resendBtn");
             const timerElement = document.getElementById("timer");
             let countdown = 60;
+            let timer;
 
             const startTimer = () => {
-                const interval = setInterval(() => {
+                countdown = 60;
+                timer = setInterval(() => {
                     countdown--;
                     timerElement.innerText = `Resend OTP in ${countdown} seconds`;
 
                     if (countdown <= 0) {
-                        clearInterval(interval);
+                        clearInterval(timer);
                         timerElement.innerText = "";
+                        resendBtn.style.display = "inline-block";
                         resendBtn.disabled = false;
                     }
                 }, 1000);
@@ -68,6 +65,7 @@
                     return;
                 }
 
+                resendBtn.style.display = "none";
                 resendBtn.disabled = true;
                 startTimer();
             });
