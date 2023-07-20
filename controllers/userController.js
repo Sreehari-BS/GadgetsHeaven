@@ -1441,66 +1441,70 @@ const payWithWallet = async (req, res) => {
     const wallet = await Wallet.findOne({ user: userId });
     const cart = await Cart.findOne({ user: userId }).populate('products.product');
     const order = await Order.findOne({ cart: cart._id });
-    if (wallet.balance >= cart.totalAmount && wallet.balance > 0) {
-      cart.products.forEach(async (item) => {
-        const purchasedProducts = {
-          userName: user.name,
-          product: item.product._id,
-          quantity: item.quantity,
-          paymentMethod: 'Wallet',
-          address: {
-            name: order.shippingAddress[0].name,
-            houseName: order.shippingAddress[0].houseName,
-            place: order.shippingAddress[0].place,
-            city: order.shippingAddress[0].city,
-            district: order.shippingAddress[0].district,
-            state: order.shippingAddress[0].state,
-            pinCode: order.shippingAddress[0].pinCode,
-            phoneNumber: order.shippingAddress[0].phoneNumber,
-          },
-          status: 'Pending',
-          date: moment().format('YYYY-MM-DD HH:mm:ss'),
+    if(order.shippingAddress.length > 0){
+      if (wallet.balance >= cart.totalAmount && wallet.balance > 0) {
+        cart.products.forEach(async (item) => {
+          const purchasedProducts = {
+            userName: user.name,
+            product: item.product._id,
+            quantity: item.quantity,
+            paymentMethod: 'Wallet',
+            address: {
+              name: order.shippingAddress[0].name,
+              houseName: order.shippingAddress[0].houseName,
+              place: order.shippingAddress[0].place,
+              city: order.shippingAddress[0].city,
+              district: order.shippingAddress[0].district,
+              state: order.shippingAddress[0].state,
+              pinCode: order.shippingAddress[0].pinCode,
+              phoneNumber: order.shippingAddress[0].phoneNumber,
+            },
+            status: 'Pending',
+            date: moment().format('YYYY-MM-DD HH:mm:ss'),
+          };
+          order.purchasedProducts.push(purchasedProducts);
+  
+          const product = await Product.findById(item.product._id);
+          product.quantity -= item.quantity;
+          await product.save();
+        });
+        await order.save();
+  
+        wallet.balance -= cart.totalAmount;
+        const debit = {
+          order: order._id,
+          date: new Date(),
+          amount: cart.totalAmount,
         };
-        order.purchasedProducts.push(purchasedProducts);
-
-        const product = await Product.findById(item.product._id);
-        product.quantity -= item.quantity;
-        await product.save();
-      });
-      await order.save();
-
-      wallet.balance -= cart.totalAmount;
-      const debit = {
-        order: order._id,
-        date: new Date(),
-        amount: cart.totalAmount,
-      };
-      wallet.debits.push(debit);
-      await wallet.save();
-
-      cart.products = [];
-      cart.totalAmount = 0;
-      await wallet.save();
-
-      await cart.save();
-
-      res.redirect('/home/success');
-    } else if (wallet.balance < cart.totalAmount && wallet.balance > 0) {
-      const debit = {
-        order: order._id,
-        date: new Date(),
-        amount: wallet.balance,
-      };
-      wallet.debits.push(debit);
-
-      cart.totalAmount -= wallet.balance;
-      await cart.save();
-
-      wallet.balance = 0;
-      await wallet.save();
-
-      res.redirect(`/home/shopingCart/${cart._id}`);
-    } else {
+        wallet.debits.push(debit);
+        await wallet.save();
+  
+        cart.products = [];
+        cart.totalAmount = 0;
+        await wallet.save();
+  
+        await cart.save();
+  
+        res.redirect('/home/success');
+      } else if (wallet.balance < cart.totalAmount && wallet.balance > 0) {
+        const debit = {
+          order: order._id,
+          date: new Date(),
+          amount: wallet.balance,
+        };
+        wallet.debits.push(debit);
+  
+        cart.totalAmount -= wallet.balance;
+        await cart.save();
+  
+        wallet.balance = 0;
+        await wallet.save();
+  
+        res.redirect(`/home/shopingCart/${cart._id}`);
+      } else {
+        res.redirect(`/home/shopingCart/${cart._id}`);
+      }
+    }else{
       res.redirect(`/home/shopingCart/${cart._id}`);
     }
   } catch (error) {
