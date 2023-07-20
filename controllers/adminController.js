@@ -951,8 +951,10 @@ const downloadSalesReport = async (req, res) => {
     const endDate = req.query.to;
 
     const browser = await puppeteer.launch({
-      headless: 'new',
+      headless: 'false',
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
+
     const page = await browser.newPage();
 
     // Render the EJS template with data
