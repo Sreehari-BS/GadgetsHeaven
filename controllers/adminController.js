@@ -952,7 +952,8 @@ const downloadSalesReport = async (req, res) => {
 
     const browser = await puppeteer.launch({
       executablePath: '/usr/bin/chromium-browser',
-      headless: true,
+      headless: false,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
 
     const page = await browser.newPage();
