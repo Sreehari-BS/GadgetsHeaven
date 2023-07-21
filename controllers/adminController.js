@@ -951,7 +951,7 @@ const downloadSalesReport = async (req, res) => {
     const endDate = req.query.to;
 
     const browser = await puppeteer.launch({
-      executablePath: '/snap/bin/chromium',
+      // executablePath: '/snap/bin/chromium',
       headless: false,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
