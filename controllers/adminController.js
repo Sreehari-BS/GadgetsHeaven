@@ -951,9 +951,9 @@ const downloadSalesReport = async (req, res) => {
     const endDate = req.query.to;
 
     const browser = await puppeteer.launch({
-      // executablePath: '/snap/bin/chromium',
-      headless: false,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      headless: true,
+      executablePath: '/usr/bin/chromium-browser',
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
 
     const page = await browser.newPage();
@@ -1009,7 +1009,7 @@ const downloadSalesReport = async (req, res) => {
   } catch (error) {
     res.render('404_errorPage', { message: error.message });
   }
-};    
+};
 
 module.exports = {
   loadAdminLogin,
