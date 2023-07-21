@@ -1441,7 +1441,7 @@ const payWithWallet = async (req, res) => {
     const wallet = await Wallet.findOne({ user: userId });
     const cart = await Cart.findOne({ user: userId }).populate('products.product');
     const order = await Order.findOne({ cart: cart._id });
-    if(order.shippingAddress.length > 0){
+    if(order && order.shippingAddress.length > 0){
       if (wallet.balance >= cart.totalAmount && wallet.balance > 0) {
         cart.products.forEach(async (item) => {
           const purchasedProducts = {
