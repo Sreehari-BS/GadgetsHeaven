@@ -24,6 +24,6 @@ const adminRoute = require('./routes/adminRoute');
 app.use('/', userRoute);
 app.use('/admin', adminRoute);
 
-app.listen(7000, () => {
-  console.log('Server is running at http://localhost:7000');
+app.listen(5000, () => {
+  console.log('Server is running at http://localhost:5000');
 });
